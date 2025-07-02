@@ -17,6 +17,11 @@
       <option name="url" value="https://hub.spigotmc.org/nexus/content/repositories/snapshots/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="gitee-dao-base" />
+      <option name="name" value="gitee-dao-base" />
+      <option name="url" value="https://gitee.com/chenlirui233/DaoBase/raw/master/releases" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
       <option name="url" value="https://repo1.maven.org/maven2" />
