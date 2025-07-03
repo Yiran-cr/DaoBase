@@ -6,7 +6,7 @@
 
   <groupId>yiran</groupId>
   <artifactId>DaoBase</artifactId>
-  <version>1.0.0</version> <!-- 更新为语义化版本 -->
+  <version>1.0.0</version>
   <packaging>jar</packaging>
 
   <name>DaoBase Framework</name>
@@ -23,7 +23,7 @@
   <developers>
     <developer>
       <name>Chenlirui</name>
-      <email>2817808727@qq.com</email> <!-- 替换为你的邮箱 -->
+      <email>2817808727@qq.com</email>
       <organization>Yiran</organization>
     </developer>
   </developers>
@@ -35,11 +35,10 @@
   </scm>
 
   <properties>
-    <java.version>17</java.version> <!-- 更新为Java 17 -->
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <spigot.version>1.20.2-R0.1-SNAPSHOT</spigot.version> <!-- 更新版本 -->
+    <java.version>1.8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <spigot.version>1.20.1-R0.1-SNAPSHOT</spigot.version>
   </properties>
 
   <build>
@@ -51,6 +50,10 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+          <compilerArgs>
+            <arg>-Xlint:unchecked</arg>
+            <arg>-Werror</arg>
+          </compilerArgs>
         </configuration>
       </plugin>
       <plugin>
@@ -123,9 +126,9 @@
 
   <distributionManagement>
     <repository>
-      <id>gitee-dao-base</id>
-      <name>DaoBase Repository</name>
-      <url>https://gitee.com/chenlirui233/DaoBase/raw/master/releases</url>
+      <id>gitee-releases</id>
+      <name>Gitee Releases</name>
+      <url>https://gitee.com/chenlirui233/DaoBase/releases/download/DaoBase/</url>
     </repository>
     <snapshotRepository>
       <id>gitee-dao-base-snapshots</id>
@@ -143,7 +146,6 @@
       <id>sonatype</id>
       <url>https://oss.sonatype.org/content/groups/public/</url>
     </repository>
-    <!-- 添加Gitee仓库 -->
     <repository>
       <id>gitee-dao-base</id>
       <url>https://gitee.com/chenlirui233/DaoBase/raw/master/releases</url>
@@ -157,6 +159,33 @@
       <version>${spigot.version}</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+      <version>24.0.1</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>java8</id>
+      <activation>
+        <jdk>1.8</jdk>
+      </activation>
+      <properties>
+        <java.version>1.8</java.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>java17</id>
+      <activation>
+        <jdk>17</jdk>
+      </activation>
+      <properties>
+        <java.version>17</java.version>
+      </properties>
+    </profile>
+  </profiles>
 </project>
 
