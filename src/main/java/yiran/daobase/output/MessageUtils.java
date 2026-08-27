@@ -1,84 +1,54 @@
 package yiran.daobase.output;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MessageUtils {
     private static JavaPlugin plugin;
-    public static String PREFIX = "§a§l[刀牌插件] ";
+    public static String PREFIX = "§a§l[DaoBase] ";
 
-    public static void init(JavaPlugin pluginInstance, String customPrefix) {
+    /**
+     * 初始化工具类
+     */
+    public static void init(JavaPlugin pluginInstance, String prefix) {
         plugin = pluginInstance;
-        PREFIX = customPrefix;
+        PREFIX = prefix;
     }
 
-    public static String playerMsg(String type, String message) {
-        String colorCode;
-        switch (type) {
-            case "highlight":
-                colorCode = "§e§l";
-                break;
-            case "warn":
-                colorCode = "§6§l";
-                break;
-            case "error":
-                colorCode = "§c§l";
-                break;
-            default:
-                colorCode = "§a§l";
-                break;
-        }
-        return ChatColor.translateAlternateColorCodes('§', PREFIX + colorCode + message);
+    /**
+     * 带颜色格式化消息
+     */
+    public static String color(String message) {
+        return ChatColor.translateAlternateColorCodes('&', PREFIX + message);
     }
 
-    public static void log(String type, String message) {
-        String formatted = playerMsg(type, message);
-        switch (type) {
-            case "error":
-                plugin.getLogger().severe(formatted);
-                break;
-            case "warn":
-                plugin.getLogger().warning(formatted);
-                break;
-            default:
-                plugin.getLogger().info(formatted);
-                break;
-        }
+    /**
+     * 发送消息给发送者
+     */
+    public static void send(CommandSender sender, String message) {
+        sender.sendMessage(color(message));
     }
 
-    public static String[] getBanner(String pluginName, String author, String version) {
-        int nameLength = pluginName.length();
-        int totalWidth = Math.max(40, nameLength + 12);
-
-        // 构建顶部和底部的装饰线
-        String topBottomLine = "§b§l" + repeatChar('=', totalWidth);
-
-        // 构建中间内容
-        String nameLine = "§b§l" + centerText("§e§l" + pluginName, totalWidth);
-        String authorLine = "§b§l作者: §e" + author;
-        String versionLine = "§b§l版本: §e" + version;
-
-        return new String[] {
-                topBottomLine,
-                nameLine,
-                authorLine,
-                versionLine,
-                topBottomLine
-        };
+    /**
+     * 日志 - 信息级别
+     */
+    public static void info(String message) {
+        plugin.getLogger().info(color(message));
     }
 
-    private static String repeatChar(char c, int count) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            sb.append(c);
-        }
-        return sb.toString();
+    /**
+     * 日志 - 警告级别
+     */
+    public static void warn(String message) {
+        plugin.getLogger().warning(color(message));
     }
 
-    private static String centerText(String text, int width) {
-        String stripped = ChatColor.stripColor(text);
-        int padding = (width - stripped.length()) / 2;
-        return repeatChar(' ', padding) + text + repeatChar(' ', padding);
+    /**
+     * 日志 - 错误级别
+     */
+    public static void error(String message) {
+        plugin.getLogger().severe(color(message));
     }
 }
 

@@ -1,5 +1,5 @@
 name: DaoBase
-version: '${project.version}'
+version: '1.0.0'
 main: yiran.daobase.DaoBase
 description: 刀牌插件的前置框架
 authors: [Yiran]

@@ -3,26 +3,32 @@ package yiran.daobase;
 import org.bukkit.plugin.java.JavaPlugin;
 import yiran.daobase.output.MessageUtils;
 
+/**
+ * DaoBase - 1.7.10 Bukkit 开发框架
+ * 提供基础工具类供其他插件使用
+ */
 public final class DaoBase extends JavaPlugin {
+
+    private static DaoBase instance;
 
     @Override
     public void onEnable() {
-        // 初始化工具类
-        MessageUtils.init(this, "§a§l[刀牌框架] "); // 自定义前缀
-
-        // 获取插件信息
-        String pluginName = getDescription().getName();
-        String author = String.join(", ", getDescription().getAuthors());
-        String version = getDescription().getVersion();
-
-        // 生成并打印面板
-        String[] banner = MessageUtils.getBanner(pluginName, author, version);
-        for (String line : banner) {
-            getLogger().info(line);
-        }
+        instance = this;
+        // 初始化消息工具
+        MessageUtils.init(this, "§a§l[DaoBase] ");
+        MessageUtils.info("§bDaoBase 框架已启用");
     }
 
     @Override
     public void onDisable() {
+        MessageUtils.info("§bDaoBase 框架已卸载");
+        instance = null;
+    }
+
+    /**
+     * 获取插件实例
+     */
+    public static DaoBase getInstance() {
+        return instance;
     }
 }
